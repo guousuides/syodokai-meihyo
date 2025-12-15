@@ -4,7 +4,7 @@
 
 ## 1. ツールの概要
 
-![イメージ画像](image.png)
+![イメージ画像](manu/image.png)
 
 このツールは以下の機能を持っています。
 - **入力**: 作品情報や学生情報が記載されたCSVファイル（[専用のgoogleform](https://docs.google.com/forms/d/e/1FAIpQLSer42Z8IgWmUUb3lMVbyy3X5TPv1y3zhMlVxdA0-otEtIC8Kg/viewform?usp=sharing&ouid=108456637930435337787)の集計結果をcsvファイルとして出力したもの）
@@ -41,15 +41,38 @@ pip install pandas reportlab
 
 ## 3. 使い方
 
-1. `kaisetu.py` を実行します。
-   ```bash
-   python kaisetu.py
-   ```
-2. ファイル選択ダイアログが表示されるので、用意した**CSVファイル**を選択します。
-3. 生成モードの確認（**個別PDF**か**結合PDF**か）が表示されるので選択します。
-   - **はい (Yes)**: `nameplate` フォルダが作成され、その中に人数分のPDFが生成されます。
-   - **いいえ (No)**: 全てのデータをまとめた1つのPDFファイルを保存します（保存先を指定します）。
-4. 処理が完了するとメッセージが表示されます。
+### 1. データの準備 (Googleフォーム)
+Googleフォームの回答ページから「スプレッドシートにリンク」または「CSVをダウンロード」を行います。
+![export](manu/howtoexport.png)
+CSVとして保存する際は、必ずファイル形式を確認してください。
+![save](manu/beforesavingcsv.png)
+
+### 2. ツール（kaisetu.py）の実行
+`kaisetu.py` をダブルクリック、またはコマンドラインから実行します。
+```bash
+python kaisetu.py
+```
+
+### 3. CSVファイルの選択
+ファイル選択ダイアログが表示されるので、用意した**CSVファイル**を選択します。
+![select csv](manu/csvselection.png)
+
+### 4. 生成モードの選択
+**個別PDF**（1人1ファイル）か**結合PDF**（全員分を1ファイル）かを選択します。
+![mode select](manu/modeselection.png)
+
+- **はい (Yes)**: `nameplate` フォルダが作成され、その中に人数分のPDFが生成されます。
+- **いいえ (No)**: 全てのデータをまとめた1つのPDFファイルを保存します（保存先を指定します）。
+
+### 5. 生成完了
+処理が完了すると、フォルダにPDFが生成されます。
+![where](manu/where.png)
+
+**出力例（個別）:**
+![kobetu](manu/kobetu.png)
+
+**出力例（結合）:**
+![matomete](manu/meihyo-matomete.png)
 
 ## 4. 入力データの仕様 (CSVファイル)
 
