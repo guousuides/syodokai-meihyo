@@ -4,8 +4,6 @@
 
 ## 1. ツールの概要
 
-![イメージ画像](manu/image.png)
-
 このツールは以下の機能を持っています。
 - **入力**: 作品情報や学生情報が記載されたCSVファイル（[専用のgoogleform](https://docs.google.com/forms/d/e/1FAIpQLSer42Z8IgWmUUb3lMVbyy3X5TPv1y3zhMlVxdA0-otEtIC8Kg/viewform?usp=sharing&ouid=108456637930435337787)の集計結果をcsvファイルとして出力したもの）
 - **処理**:
@@ -50,6 +48,7 @@ CSVとして保存する際は、必ずファイル形式を確認してくだ�
 
 ダウンロードしたCSVファイルを、ツール（今回の場合`meihyo.exe`）が入っているフォルダと同じ場所に移動させておくと便利です。
 ![move](manu/move.png)
+
 ![moved](manu/moved.png)
 
 ### 2. ツールの実行
