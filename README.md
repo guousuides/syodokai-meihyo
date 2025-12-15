@@ -81,6 +81,7 @@ CSVとして保存する際は、必ずファイル形式を確認してくだ�
 
 中身の例：
 ![kobetu pdf](manu/kobetu.png)
+[実際のPDFサンプルを表示](<manu/佐久間信之 臨　王義之　「蘭亭序」.pdf>)
 
 **結合出力（No）の場合:**
 指定したファイル名（例: `name-matomete.pdf`など）で保存されます。
@@ -88,6 +89,7 @@ CSVとして保存する際は、必ずファイル形式を確認してくだ�
 
 中身の例：
 ![matomete pdf](manu/meihyo-matomete.png)
+[実際のPDFサンプルを表示](manu/meihyo.pdf)
 
 ## 4. 入力データの仕様 (CSVファイル)
 
