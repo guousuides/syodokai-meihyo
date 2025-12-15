@@ -48,12 +48,12 @@ Googleフォームの回答ページから「スプレッドシートにリン�
 CSVとして保存する際は、必ずファイル形式を確認してください。
 ![save](manu/beforesavingcsv.png)
 
-ダウンロードしたCSVファイルを、ツール（`kaisetu.py`）が入っているフォルダと同じ場所に移動させておくと便利です。
+ダウンロードしたCSVファイルを、ツール（今回の場合`meihyo.exe`）が入っているフォルダと同じ場所に移動させておくと便利です。
 ![move](manu/move.png)
 ![moved](manu/moved.png)
 
 ### 2. ツールの実行
-`kaisetu.py` を実行（ダブルクリック）します。
+`meihyo.exe` を実行（ダブルクリック）します。
 ![open](manu/opend.png)
 
 ### 3. CSVの選択
