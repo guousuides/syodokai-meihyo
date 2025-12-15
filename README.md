@@ -68,15 +68,11 @@ CSVとして保存する際は、必ずファイル形式を確認してくだ�
 - **はい (Yes)**: 個別ファイル出力（人数分のPDFを作成）
 - **いいえ (No)**: 結合ファイル出力（全員分を1つのPDFに結合）
 
-### 5. 生成完了
-処理が完了すると、フォルダ内に成果物が生成されます。
-![where](manu/where.png)
-
-### 6. 出力確認
+### 5. 出力確認
 
 **個別出力（Yes）の場合:**
 フォルダ `nameplate` が作成され、その中に人数分の個別のPDFが保存されます。
-![kobetu folder](manu/output-kobetu.png)
+![kobetu folder](manu/kobetu.png)
 
 中身の例：
 ![kobetu pdf](manu/kobetu.png)
