@@ -5,7 +5,7 @@
 ## 1. ツールの概要
 
 このツールは以下の機能を持っています。
-- **入力**: 作品情報や学生情報が記載されたCSVファイル（専用のgoogleformの集計結果をcsvファイルとして出力したもの）
+- **入力**: 作品情報や学生情報が記載されたCSVファイル（[専用のgoogleform](https://docs.google.com/forms/d/e/1FAIpQLSer42Z8IgWmUUb3lMVbyy3X5TPv1y3zhMlVxdA0-otEtIC8Kg/viewform?usp=sharing&ouid=108456637930435337787)の集計結果をcsvファイルとして出力したもの）
 - **処理**:
     - データの読み込み（UTF-8およびShift-JISに対応）
     - データの自動整形（半角カナの全角化、臨書/創作による項目の自動選択など）
