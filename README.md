@@ -41,38 +41,53 @@ pip install pandas reportlab
 
 ## 3. 使い方
 
-### 1. データの準備 (Googleフォーム)
+### 1. データの準備
 Googleフォームの回答ページから「スプレッドシートにリンク」または「CSVをダウンロード」を行います。
 ![export](manu/howtoexport.png)
+
 CSVとして保存する際は、必ずファイル形式を確認してください。
 ![save](manu/beforesavingcsv.png)
 
-### 2. ツール（kaisetu.py）の実行
-`kaisetu.py` をダブルクリック、またはコマンドラインから実行します。
-```bash
-python kaisetu.py
-```
+ダウンロードしたCSVファイルを、ツール（`kaisetu.py`）が入っているフォルダと同じ場所に移動させておくと便利です。
+![move](manu/move.png)
+![moved](manu/moved.png)
 
-### 3. CSVファイルの選択
-ファイル選択ダイアログが表示されるので、用意した**CSVファイル**を選択します。
-![select csv](manu/csvselection.png)
+### 2. ツールの実行
+`kaisetu.py` を実行（ダブルクリック）します。
+![open](manu/opend.png)
 
-### 4. 生成モードの選択
-**個別PDF**（1人1ファイル）か**結合PDF**（全員分を1ファイル）かを選択します。
-![mode select](manu/modeselection.png)
+### 3. CSVの選択
+ファイル選択ボタンなどから、先ほど用意したCSVファイルを選択します。
+![select](manu/select.png)
 
-- **はい (Yes)**: `nameplate` フォルダが作成され、その中に人数分のPDFが生成されます。
-- **いいえ (No)**: 全てのデータをまとめた1つのPDFファイルを保存します（保存先を指定します）。
+ファイル選択ダイアログでファイルを選び、「開く」を押します。
+![selection dialog](manu/csvselection.png)
+
+### 4. モード選択
+出力形式を選択するダイアログが出ます。
+![mode](manu/modeselection.png)
+- **はい (Yes)**: 個別ファイル出力（人数分のPDFを作成）
+- **いいえ (No)**: 結合ファイル出力（全員分を1つのPDFに結合）
 
 ### 5. 生成完了
-処理が完了すると、フォルダにPDFが生成されます。
+処理が完了すると、フォルダ内に成果物が生成されます。
 ![where](manu/where.png)
 
-**出力例（個別）:**
-![kobetu](manu/kobetu.png)
+### 6. 出力確認
 
-**出力例（結合）:**
-![matomete](manu/meihyo-matomete.png)
+**個別出力（Yes）の場合:**
+フォルダ `nameplate` が作成され、その中に人数分の個別のPDFが保存されます。
+![kobetu folder](manu/output-kobetu.png)
+
+中身の例：
+![kobetu pdf](manu/kobetu.png)
+
+**結合出力（No）の場合:**
+指定したファイル名（例: `name-matomete.pdf`など）で保存されます。
+![matomete file](manu/name-matomete.png)
+
+中身の例：
+![matomete pdf](manu/meihyo-matomete.png)
 
 ## 4. 入力データの仕様 (CSVファイル)
 
