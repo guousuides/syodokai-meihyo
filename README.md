@@ -202,3 +202,33 @@ ReportLabの座標系は **「左下が原点 (0, 0)」** です。
 
 ## 7. お問い合わせ
 73期の郭に直接Lineするか、yoyokaku6871@gmail.comに連絡してください。
+
+## 8. アプリ化（exe化）の方法
+
+このツールをPythonがインストールされていないPCでも動かせるように、`.exe` ファイル（アプリ）にする方法です。
+
+### 1. PyInstallerのインストール
+まだインストールしていない場合は、以下のコマンドを実行します。
+
+```bash
+pip install pyinstaller
+```
+
+### 2. exeファイルの作成
+ターミナルで以下のコマンドを実行します。
+
+**kaisetu.py をアプリ化する場合:**
+```bash
+pyinstaller kaisetu.py --onefile --noconsole
+```
+
+**galtusaku.py をアプリ化する場合:**
+```bash
+pyinstaller galtusaku.py --onefile --noconsole
+```
+
+- `--onefile`: 関連ファイルを1つのexeファイルにまとめます。
+- `--noconsole`: アプリ実行時に黒い画面（コンソール）が出ないようにします。
+
+### 3. 生成物の確認
+処理が完了すると `dist` フォルダが作成され、その中に `kaisetu.exe` (または `galtusaku.exe`) が生成されます。このファイルだけで実行可能です。
