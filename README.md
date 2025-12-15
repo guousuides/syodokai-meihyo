@@ -57,8 +57,6 @@ CSVとして保存する際は、必ずファイル形式を確認してくだ�
 
 ### 3. CSVの選択
 ファイル選択ボタンなどから、先ほど用意したCSVファイルを選択します。
-![select](manu/select.png)
-
 ファイル選択ダイアログでファイルを選び、「開く」を押します。
 ![selection dialog](manu/csvselection.png)
 
@@ -75,7 +73,6 @@ CSVとして保存する際は、必ずファイル形式を確認してくだ�
 ![kobetu folder](manu/kobetu.png)
 
 中身の例：
-![kobetu pdf](manu/kobetu.png)
 [実際のPDFサンプルを表示](<manu/佐久間信之 臨　王義之　「蘭亭序」.pdf>)
 
 **結合出力（No）の場合:**
@@ -83,7 +80,6 @@ CSVとして保存する際は、必ずファイル形式を確認してくだ�
 ![matomete file](manu/name-matomete.png)
 
 中身の例：
-![matomete pdf](manu/meihyo-matomete.png)
 [実際のPDFサンプルを表示](manu/meihyo.pdf)
 
 ## 4. 入力データの仕様 (CSVファイル)
