@@ -409,14 +409,14 @@ COORDINATES = {
         'adjustments': WORK_INFO_ADJUSTMENTS
     },
     '釈文': {
-        'x': [152, 162, 172],
+        'x': [152, 162, 172], # 1行の時=152, 2行の時=162, 3行の時=172
         'y': 786, 
         'font_size': 10, 'char_spacing': 1.0, 'wrap': True,
         'max_chars': 55, 'line_spacing': 20, 'horizontal': False,
         'adjustments': PUNCTUATION_ADJUSTMENTS
     },
     'コメント': {
-        'x': [70, 80, 85, 95, 105],
+        'x': [70, 80, 85, 95, 105], # 1行の時=70, 2行の時=80, 3行の時=85, 4行の時=95, 5行の時=105
         'y': 786,
         'font_size': 10, 'char_spacing': 1.0, 'wrap': True,
         'max_chars': 55, 'line_spacing': 20, 'horizontal': False,
