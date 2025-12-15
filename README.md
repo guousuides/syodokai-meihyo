@@ -200,10 +200,7 @@ ReportLabの座標系は **「左下が原点 (0, 0)」** です。
 
 ---
 
-## 7. お問い合わせ
-73期の郭に直接Lineするか、yoyokaku6871@gmail.comに連絡してください。
-
-## 8. アプリ化（exe化）の方法
+## 7. アプリ化（exe化）の方法
 
 このツールをPythonがインストールされていないPCでも動かせるように、`.exe` ファイル（アプリ）にする方法です。
 
@@ -232,3 +229,6 @@ pyinstaller galtusaku.py --onefile --noconsole
 
 ### 3. 生成物の確認
 処理が完了すると `dist` フォルダが作成され、その中に `kaisetu.exe` (または `galtusaku.exe`) が生成されます。このファイルだけで実行可能です。
+
+## 8. お問い合わせ
+73期の郭に直接Lineするか、yoyokaku6871@gmail.comに連絡してください。
