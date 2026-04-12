@@ -664,7 +664,7 @@ def draw_horizontal_text(canvas, text, x, y, font_name, font_size=12):
     # ★太字処理
     if USE_BOLD:
         canvas.setLineWidth(font_size * BOLD_WIDTH_RATIO)
-        canvas.setStrokeColorRGB(0, 0, 0)
+        canvas.setStrokeColorRGB(0, 0, )
         canvas._code.append('2 Tr')
         
     canvas.drawString(x, y, str(text))
@@ -896,6 +896,7 @@ def draw_content_blocks(page_canvas, data_row, x_offset=0):
                                        adjustments=adjustments)
 
 def generate_combined_pdf(data, pdf_file_path):
+    page_width, page_height = portrait(A4)
     page_canvas = canvas.Canvas(pdf_file_path, pagesize=portrait(A4))
     i = 0
     while i < len(data):
@@ -906,6 +907,15 @@ def generate_combined_pdf(data, pdf_file_path):
         
         if i + 1 < len(data):
             draw_content_blocks(page_canvas, data.iloc[i + 1], x_offset=OFFSET_X)
+        
+        # --- 真ん中に点線を描画 ---
+        bx = OFFSET_X
+        page_canvas.saveState()
+        page_canvas.setDash(2, 4)
+        page_canvas.setLineWidth(0.5)
+        page_canvas.setStrokeColorRGB(0.5, 0.5, 0.5)
+        page_canvas.line(bx, 0, bx, page_height)
+        page_canvas.restoreState()
         
         i += 2
     page_canvas.save()
