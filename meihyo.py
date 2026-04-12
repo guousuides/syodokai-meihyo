@@ -756,7 +756,7 @@ def preprocess_data(data: pd.DataFrame) -> pd.DataFrame:
             else:
                 return f"{work_type}　{work_writer}　「{work_name}」"
         data["作品情報"] = data.apply(combine_work_name, axis=1)
-        drop_cols = [col for col in ["作品形式", "作品名", "作者名"] if col in data.columns]
+        drop_cols = [col for col in ["作品名", "作者名"] if col in data.columns]
         data.drop(columns=drop_cols, inplace=True)
         data.insert(3, "作品情報", data.pop("作品情報"))
     
@@ -824,6 +824,18 @@ def draw_content_blocks(page_canvas, data_row, x_offset=0):
     page_canvas.line(192 + x_offset, 230, 192 + x_offset, 810)
     page_canvas.line(236 + x_offset, 230, 236 + x_offset, 810)
     page_canvas.line(236 + x_offset, 520, 280 + x_offset, 520)
+
+    # 創作の時は上下の枠の間に点線を引く
+    work_type = str(data_row.get("作品形式", ""))
+    if "臨" not in work_type:
+        page_canvas.saveState()
+        page_canvas.setDash(1, 5)
+        page_canvas.setLineWidth(0.3)
+        page_canvas.setStrokeColorRGB(0, 0, 0)
+        # y=220は210(下の枠の上端)と230(上の枠の下端)の中間
+        # 横幅を紙面の横半分（OFFSET_X分）に広げる
+        page_canvas.line(x_offset, 220, OFFSET_X + x_offset, 220)
+        page_canvas.restoreState()
     
     # ★枠線を描き終わったら設定を元に戻す
     page_canvas.restoreState()
