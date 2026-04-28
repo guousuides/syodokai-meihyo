@@ -61,7 +61,8 @@ PUNCTUATION_ADJUSTMENTS = {
     'ぅ': {'x_offset': 1, 'y_offset': 0},
     'ぇ': {'x_offset': 1, 'y_offset': 0},
     'ぉ': {'x_offset': 1, 'y_offset': 0},
-    'ー': {'x_offset': 4, 'y_offset': 8},
+    'ー': {'x_offset':4, 'y_offset': 8},
+    '～': {'x_offset':4, 'y_offset': 8},
     '(': {'x_offset': 4.5, 'y_offset': 10},
     ')': {'x_offset': 4.5, 'y_offset': 3},
     '（': {'x_offset': 4, 'y_offset': 12.5},
@@ -195,7 +196,8 @@ PUNCTUATION_ADJUSTMENTS = {
     'ｙ': {'x_offset': 3.5, 'y_offset': 9},
     'ｚ': {'x_offset': 3.5, 'y_offset': 9},
     '，': {'x_offset': 7, 'y_offset':5},
-
+    ':' : {'x_offset':5, 'y_offset': 2},
+    '-' : {'x_offset': 5, 'y_offset': 2},
 }
 
 WORK_NAME_ADJUSTMENTS = {
@@ -221,8 +223,8 @@ WORK_NAME_ADJUSTMENTS = {
     '}': {'x_offset': 2, 'y_offset': -3},
     '「': {'x_offset': 0, 'y_offset': 0},
     '」': {'x_offset': 9, 'y_offset': 4},
-    '『': {'x_offset': 2, 'y_offset': -3},
-    '』': {'x_offset': 2, 'y_offset': -3},
+    '『': {'x_offset': 8, 'y_offset': 15},
+    '』': {'x_offset': 5, 'y_offset': 14},
     '-': {'x_offset': 10, 'y_offset': 4},
     '→': {'x_offset': 9.5, 'y_offset': 6},
     '←': {'x_offset': 9.5, 'y_offset': 6},
@@ -291,7 +293,6 @@ WORK_INFO_ADJUSTMENTS = WORK_NAME_ADJUSTMENTS.copy()
 WORK_INFO_ADJUSTMENTS.update({
     '「': {'x_offset': 10, 'y_offset': 14, 'angle': 270},
     '」': {'x_offset': 6, 'y_offset': 15, 'angle': 270},
-    
 })
 
 NAME_ADJUSTMENTS = {
@@ -331,13 +332,14 @@ DEPARTMENT_YEAR_ADJUSTMENTS = {
     '部': {'x_offset': 0, 'y_offset': 0},
     '年': {'x_offset': 0, 'y_offset': 0},
     '生': {'x_offset': 0, 'y_offset': 0},
+    'ー': {'x_offset': 7, 'y_offset': 17},
 }
 
 ROTATED_CHARS = {'(', ')', '（', '）', '[', ']', '{', '}', '「', '」', '『', '』', 'ー','-','→','←','↑','↓','＜','＞','〈','〉','～','!',
                 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
                 'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
                 'Ａ','Ｂ','Ｃ','Ｄ','Ｅ','Ｆ','Ｇ','Ｈ','Ｉ','Ｊ','Ｋ','Ｌ','Ｍ','Ｎ','Ｏ','Ｐ','Ｑ','Ｒ','Ｓ','Ｔ','Ｕ','Ｖ','Ｗ','Ｘ','Ｙ','Ｚ',
-                'ａ','ｂ','ｃ','ｄ','ｅ','ｆ','ｇ','ｈ','ｉ','ｊ','ｋ','ｌ','ｍ','ｎ','ｏ','ｐ','ｑ','ｒ','ｓ','ｔ','ｕ','ｖ','ｗ','ｘ','ｙ','ｚ'}
+                'ａ','ｂ','ｃ','ｄ','ｅ','ｆ','ｇ','ｈ','ｉ','ｊ','ｋ','ｌ','ｍ','ｎ','ｏ','ｐ','ｑ','ｒ','ｓ','ｔ','ｕ','ｖ','ｗ','ｘ','ｙ','ｚ',':','-' }
 
 COORDINATES = {
     '学部学年': {
@@ -385,11 +387,11 @@ COORDINATES = {
         'wrap': True, 'max_chars': 25, 'line_spacing': 30, 'horizontal': True, 'centered': True,
         'adjustments': WORK_NAME_ADJUSTMENTS
     },
-    '再提出': {
-        'x': 150, 'y': 5, 'font_size': 14, 'char_spacing': 1,
-        'wrap': True, 'max_chars': 25, 'line_spacing': 30, 'horizontal': True, 'centered': True,
-        'adjustments': PUNCTUATION_ADJUSTMENTS
-    },
+    # '再提出': {
+    #     'x': 150, 'y': 5, 'font_size': 14, 'char_spacing': 1,
+    #     'wrap': True, 'max_chars': 25, 'line_spacing': 30, 'horizontal': True, 'centered': True,
+    #     'adjustments': PUNCTUATION_ADJUSTMENTS
+    # },
 }
 
 OFFSET_X = 300
@@ -761,7 +763,9 @@ def preprocess_data(data: pd.DataFrame) -> pd.DataFrame:
         data.insert(3, "作品情報", data.pop("作品情報"))
     
     def hurigana(row):
-            hurigana = str(row.get("ふりがな", "") or "")
+            hurigana = str(row.get("ふりがな", "") or "").strip()
+            if not hurigana or hurigana == "nan":
+                return ""
             return f"（{hurigana}）"
     data["ふりがな"] = data.apply(hurigana, axis=1)
     data.insert(5, "ふりがな", data.pop("ふりがな"))
@@ -825,7 +829,6 @@ def draw_content_blocks(page_canvas, data_row, x_offset=0):
     page_canvas.line(236 + x_offset, 230, 236 + x_offset, 810)
     page_canvas.line(236 + x_offset, 520, 280 + x_offset, 520)
 
-    # 創作の時は上下の枠の間に点線を引く
     work_type = str(data_row.get("作品形式", ""))
     if "臨" not in work_type:
         page_canvas.saveState()
