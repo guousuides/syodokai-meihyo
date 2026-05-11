@@ -395,6 +395,25 @@ COORDINATES = {
 }
 
 OFFSET_X = 300
+PAGE_WIDTH, PAGE_HEIGHT = portrait(A4
+)
+HALF_WIDTH = PAGE_WIDTH / 2
+# 枠の幅は260。各半分の領域（HALF_WIDTH）の中央に配置するためのマージンを計算
+MARGIN = (HALF_WIDTH - 260) / 2
+# left_x = 20 + offset_left = MARGIN  => offset_left = MARGIN - 20
+OFFSET_LEFT = MARGIN - 20
+OFFSET_RIGHT = HALF_WIDTH + MARGIN - 20
+
+# 縦の余白（1:2:1）の計算
+TOTAL_RECT_HEIGHT = 190 + 580
+TOTAL_MARGIN_Y = PAGE_HEIGHT - TOTAL_RECT_HEIGHT
+MARGIN_Y_UNIT = TOTAL_MARGIN_Y / 4
+
+NEW_BOTTOM_Y = MARGIN_Y_UNIT
+NEW_TOP_Y = NEW_BOTTOM_Y + 190 + MARGIN_Y_UNIT * 2
+
+DY_BOTTOM = NEW_BOTTOM_Y - 20
+DY_TOP = NEW_TOP_Y - 230
 
 # ==========================================
 # 描画関数群 (太字対応済み)
@@ -822,12 +841,12 @@ def draw_content_blocks(page_canvas, data_row, x_offset=0):
     page_canvas.setStrokeColorRGB(0, 0, 0)
     
     # --- 枠線の描画 ---
-    page_canvas.rect(20 + x_offset, 20, 260, 190)
-    page_canvas.rect(20 + x_offset, 230, 260, 580)
-    page_canvas.line(120 + x_offset, 230, 120 + x_offset, 810)
-    page_canvas.line(192 + x_offset, 230, 192 + x_offset, 810)
-    page_canvas.line(236 + x_offset, 230, 236 + x_offset, 810)
-    page_canvas.line(236 + x_offset, 520, 280 + x_offset, 520)
+    page_canvas.rect(20 + x_offset, NEW_BOTTOM_Y, 260, 190)
+    page_canvas.rect(20 + x_offset, NEW_TOP_Y, 260, 580)
+    page_canvas.line(120 + x_offset, NEW_TOP_Y, 120 + x_offset, NEW_TOP_Y + 580)
+    page_canvas.line(192 + x_offset, NEW_TOP_Y, 192 + x_offset, NEW_TOP_Y + 580)
+    page_canvas.line(236 + x_offset, NEW_TOP_Y, 236 + x_offset, NEW_TOP_Y + 580)
+    page_canvas.line(236 + x_offset, NEW_TOP_Y + 290, 280 + x_offset, NEW_TOP_Y + 290)
 
     work_type = str(data_row.get("作品形式", ""))
     if "臨" not in work_type:
@@ -835,15 +854,21 @@ def draw_content_blocks(page_canvas, data_row, x_offset=0):
         page_canvas.setDash(1, 5)
         page_canvas.setLineWidth(0.3)
         page_canvas.setStrokeColorRGB(0, 0, 0)
-        # y=220は210(下の枠の上端)と230(上の枠の下端)の中間
-        # 横幅を紙面の横半分（OFFSET_X分）に広げる
-        page_canvas.line(x_offset, 220, OFFSET_X + x_offset, 220)
+        # 中央の点線のY座標: 下の枠の上端と上の枠の下端の中間
+        dash_y = NEW_BOTTOM_Y + 190 + MARGIN_Y_UNIT
+        # 各半分の領域の左端から右端まで直線を引く
+        line_start_x = 20 + x_offset - MARGIN
+        line_end_x = line_start_x + HALF_WIDTH
+        page_canvas.line(line_start_x, dash_y, line_end_x, dash_y)
         page_canvas.restoreState()
     
     # ★枠線を描き終わったら設定を元に戻す
     page_canvas.restoreState()
 
     for column, coord in COORDINATES.items():
+        original_y = coord['y']
+        y = original_y + DY_BOTTOM if original_y < 230 else original_y + DY_TOP
+
         if coord.get('handler') == 'name_and_furigana':
             name_text = data_row.get("氏名", "")
             furigana_text = data_row.get("ふりがな", "")
@@ -852,7 +877,7 @@ def draw_content_blocks(page_canvas, data_row, x_offset=0):
                 name=name_text,
                 furigana=furigana_text,
                 x=coord['x'] + x_offset,
-                y=coord['y'],
+                y=y,
                 name_font_size=coord['name_font_size'],
                 furigana_font_size=coord['furigana_font_size'],
                 char_spacing=coord['char_spacing'],
@@ -863,7 +888,6 @@ def draw_content_blocks(page_canvas, data_row, x_offset=0):
             continue
 
         value = data_row.get(column, "")
-        y = coord['y']
         
         adjustments = coord.get('adjustments', PUNCTUATION_ADJUSTMENTS)
         
@@ -911,25 +935,23 @@ def draw_content_blocks(page_canvas, data_row, x_offset=0):
                                        adjustments=adjustments)
 
 def generate_combined_pdf(data, pdf_file_path):
-    page_width, page_height = portrait(A4)
     page_canvas = canvas.Canvas(pdf_file_path, pagesize=portrait(A4))
     i = 0
     while i < len(data):
         if i > 0:
             page_canvas.showPage()
         
-        draw_content_blocks(page_canvas, data.iloc[i], x_offset=0)
+        draw_content_blocks(page_canvas, data.iloc[i], x_offset=OFFSET_LEFT)
         
         if i + 1 < len(data):
-            draw_content_blocks(page_canvas, data.iloc[i + 1], x_offset=OFFSET_X)
+            draw_content_blocks(page_canvas, data.iloc[i + 1], x_offset=OFFSET_RIGHT)
         
         # --- 真ん中に点線を描画 ---
-        bx = OFFSET_X
         page_canvas.saveState()
         page_canvas.setDash(2, 4)
         page_canvas.setLineWidth(0.5)
         page_canvas.setStrokeColorRGB(0.5, 0.5, 0.5)
-        page_canvas.line(bx, 0, bx, page_height)
+        page_canvas.line(HALF_WIDTH, 0, HALF_WIDTH, PAGE_HEIGHT)
         page_canvas.restoreState()
         
         i += 2
@@ -944,7 +966,7 @@ def generate_individual_pdfs(data, output_dir):
         pdf_path = os.path.join(output_dir, safe_filename)
 
         page_canvas = canvas.Canvas(pdf_path, pagesize=portrait(A4))
-        draw_content_blocks(page_canvas, row, x_offset=0)
+        draw_content_blocks(page_canvas, row, x_offset=OFFSET_LEFT)
         page_canvas.save()
 
     messagebox.showinfo("完了", f"{len(data)}件のPDFファイルを作成しました:\n{output_dir}")
